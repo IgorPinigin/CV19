@@ -1,10 +1,13 @@
-﻿using CV19.ViewModels.Base;
+﻿using CV19.Infrastructure.Commands;
+using CV19.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CV19.ViewModels
 {
@@ -13,7 +16,7 @@ namespace CV19.ViewModels
         #region Заголовок окна
         private string _Title = "Анализ статистики CV19";
         /// <summary> Заголовок окна</summary>
-        public string Title 
+        public string Title
         {
             get => _Title;
             set => Set(ref _Title, value);
@@ -28,6 +31,20 @@ namespace CV19.ViewModels
             set => Set(ref _Status, value);
         }
         #endregion
+        #region Команды 
+        public ICommand CloseApplicationCommand { get; }
+        private bool CanCloseApplicationCommandExecute(object p) => true;
+        private void OnCloseApplicationCommandExecuted(object p)
+        {
+            Application.Current.Shutdown();
+        }
+        #endregion
+        public MainWindowViewModel() 
+        {
+            #region Команды 
+            CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            #endregion
     }
+}
 }
 
