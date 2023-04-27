@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace CV19.ViewModels
 {
-    internal class MainWindowViewModel : ViewModel
+    class MainWindowViewModel : ViewModel
     {
         #region Заголовок окна
 
@@ -28,12 +28,16 @@ namespace CV19.ViewModels
             Application.Current.Shutdown();
         }
         #endregion
-        public MainWindowViewModel() 
+        public MainWindowViewModel()
         {
             #region Команды 
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             #endregion
+        }
+
+        private string _Title = "Главное окно программы";
+
+        public string Title { get { return _Title; } }
     }
-}
 }
 

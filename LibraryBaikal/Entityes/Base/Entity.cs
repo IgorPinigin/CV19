@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CV19.Views.Helpers
+namespace LibraryBaikal.Entityes.Base
 {
-    class MapScreen
+    public abstract class Entity
     {
+        public int Id { get; set; }
 
     }
 }

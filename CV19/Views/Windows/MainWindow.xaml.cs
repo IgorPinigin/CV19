@@ -20,6 +20,7 @@ namespace CV19
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             viewModel.Projections.Add(new WebMercatorProjection());
             viewModel.Projections.Add(new Etrs89UtmProjection(32));
 

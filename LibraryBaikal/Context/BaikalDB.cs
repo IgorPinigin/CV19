@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CV19.Views.Helpers
+namespace LibraryBaikal.Context
 {
-    class MapScreen
+    public class BaikalDB
     {
-
     }
 }
