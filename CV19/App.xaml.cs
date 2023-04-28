@@ -1,4 +1,5 @@
-﻿using CV19.Services;
+﻿using CV19.Data;
+using CV19.Services;
 using CV19.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,6 +22,7 @@ namespace CV19
         public static IServiceProvider Services => Host.Services;
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddDatabase(host.Configuration.GetSection("Database"))
             .AddServices()
             .AddViewModels()
             ;
