@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LibraryBaikal.Entityes.Base
 {
-    public abstract class Entity
+    public partial class Entity
     {
         public int Id { get; set; }
 
     }
-    public abstract class Town : Entity 
+    public partial class Town : Entity 
     {
         [Required]
         public string Name { get; set; }

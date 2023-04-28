@@ -19,6 +19,9 @@ namespace CV19.Data
                 switch (type)
                 {
                     case null: throw new InvalidOperationException("Не определен тип БД");
+                    case "MSSQL":
+                        opt.UseSqlServer(Configuration.GetConnectionString(type));
+                        break;
                     case "SQLite":
                         opt.UseSqlite(Configuration.GetConnectionString(type));
                         break;

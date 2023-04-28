@@ -16,5 +16,7 @@ namespace LibraryBaikal.Context
         { 
         
         }
+
+        public BaikalDB() { }
     }
 }
