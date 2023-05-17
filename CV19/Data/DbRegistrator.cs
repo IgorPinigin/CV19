@@ -30,6 +30,7 @@ namespace CV19.Data
                         break;
                 }
             })
+            .AddTransient<DbInitializer>()
             ;
     }
 }

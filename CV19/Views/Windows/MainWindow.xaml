@@ -3,11 +3,45 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF"
         
-        Loaded="Window_Loaded"
-        DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
-        Title="{Binding Title}" Height="146" Width="362">
+       
+        Title="XAML MapControl - Projection Demo" Height="1050" Width="1920" WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180*"/>
+            <ColumnDefinition Width="1620*"/>
+        </Grid.ColumnDefinitions>
+
+        <map:Map ZoomLevel="13" Grid.Column="1" Center="{Binding MapCenter}" MapLayer="{Binding CurrentLayer}" IsHitTestVisible="False" Grid.ColumnSpan="2" Visibility="Visible">
+            
+        </map:Map>
+        <StackPanel Grid.Column="1" Grid.ColumnSpan="2">
+            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox1}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox1}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black" />
+            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox2}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox2}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
+            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox3}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox3}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black" HorizontalContentAlignment="Left"/>
+            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox4}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox4}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
+            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox5}" Height="22" Width="450" Visibility="Hidden" Content="{Binding ContentCheckBox5}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="0">
+            <Label Content="ВЫБЕРИТЕ ГОРОД" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Dubai Medium" FontSize="16"/>
 
 
 
+            <ComboBox Width="140" Height="35" SelectedIndex="{Binding SelectedTown}" Margin="0,10,0,0" FontFamily="Dubai Medium" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                <ComboBoxItem Content="Ангарск"/>
+                <ComboBoxItem Content="Усолье-Сибирское"/>
+                <ComboBoxItem Content="Иркутск"/>
+            </ComboBox>
+            <Label Content="ВЫБЕРИТЕ ПНЗА" Margin="0,100,0,0" FontFamily="Dubai Medium" FontSize="16" HorizontalAlignment="Center" Visibility="Visible"/>
+            <Button Content="ДАЛЕЕ" Width="140" Height="35" IsEnabled="False" Visibility="Visible"/>
+            <Label Content="ВЫБЕРИТЕ ИСТОЧНИКИ" Margin="0,100,0,0" FontFamily="Dubai Medium" FontSize="16" Height="87" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Visibility="Visible"/>
+            <Button Content="ДАЛЕЕ" Width="140" Height="35" Visibility="Visible"/>
+
+
+
+        </StackPanel>
+    </Grid>
 
 </Window>

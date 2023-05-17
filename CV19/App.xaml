@@ -5,7 +5,8 @@
              StartupUri="Views/Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <SolidColorBrush Color="Orange" x:Key="OrangeColor"/>
             <vm:ViewModelLocator x:Key="Locator"/>
-          </ResourceDictionary>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

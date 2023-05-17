@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace LibraryBaikal.Entityes.Base
 {
-    public partial class Entity
+    public class Entity
     {
         public int Id { get; set; }
 
     }
-    public partial class Town : Entity 
+    public class Town : Entity 
     {
-        [Required]
         public string Name { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
-
     }
+
+
+
 }

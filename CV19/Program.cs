@@ -12,9 +12,9 @@ namespace CV19
     {
         [STAThread]
         static void Main(string[] args) { 
-        var app = new App();
+        var app = new App();app.InitializeComponent();
             app.Run();
-            app.InitializeComponent();
+            
         }
         public static IHostBuilder CreateHostBuilder(string[] args) => Host
             .CreateDefaultBuilder(args)

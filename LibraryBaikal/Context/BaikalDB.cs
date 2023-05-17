@@ -18,5 +18,12 @@ namespace LibraryBaikal.Context
         }
 
         public BaikalDB() { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Town>((builder)=> {
+            builder.HasIndex(x=>x.Name).IsUnique();
+            });
+        }
     }
 }
