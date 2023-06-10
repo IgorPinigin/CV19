@@ -56,5 +56,7 @@ namespace CV19.Models.CalculationModel
             }
            return  1;
         }
+
+
     }
 }

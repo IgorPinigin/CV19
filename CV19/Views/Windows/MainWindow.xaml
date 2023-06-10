@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF"
-        
-       
+xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         Title="XAML MapControl - Projection Demo" Height="1050" Width="1920" WindowStartupLocation="CenterScreen" 
         Loaded="Window_Loaded">
     <Grid>
@@ -11,36 +10,47 @@
             <ColumnDefinition Width="180*"/>
             <ColumnDefinition Width="1620*"/>
         </Grid.ColumnDefinitions>
-
-        <map:Map ZoomLevel="13" Grid.Column="1" Center="{Binding MapCenter}" MapLayer="{Binding CurrentLayer}" IsHitTestVisible="False" Grid.ColumnSpan="2" Visibility="Visible">
-            
-        </map:Map>
-        <StackPanel Grid.Column="1" Grid.ColumnSpan="2">
-            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox1}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox1}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black" />
-            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox2}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox2}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
-            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox3}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox3}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black" HorizontalContentAlignment="Left"/>
-            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox4}" Height="22" Width="350" Visibility="Hidden" Content="{Binding ContentCheckBox4}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
-            <CheckBox Grid.Column="1" Margin="{Binding MarginCheckBox5}" Height="22" Width="450" Visibility="Hidden" Content="{Binding ContentCheckBox5}" FontSize="20" FontWeight="Bold" VerticalContentAlignment="Bottom" BorderBrush="Black"/>
-        </StackPanel>
-
-
+        <Border Grid.Column="1">
+            <m:Map x:Name="myMap" 
+                       CredentialsProvider="eZNgmmR40DyTunPmOrBp~kolAxjG20pwiJF7fIm2QRw~AgWBvZTh2hKwZ5-mh8lAl9VPhPh9CcU0YgZtlG62RHVmxwhFLrPTU1UecR96Old1" 
+                       Mode="AerialWithLabels" >
+                <m:MapItemsControl ItemsSource="{Binding PNZAPoints}">
+                    <m:MapItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <m:Pushpin Visibility="{Binding Visibility}" 
+                                           Location="{Binding Location}" 
+                                           ToolTip="{Binding Name}"/>
+                        </DataTemplate>
+                    </m:MapItemsControl.ItemTemplate>
+                </m:MapItemsControl>
+            </m:Map>
+        </Border>
         <StackPanel Grid.Column="0">
             <Label Content="ВЫБЕРИТЕ ГОРОД" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Dubai Medium" FontSize="16"/>
-
-
-
-            <ComboBox Width="140" Height="35" SelectedIndex="{Binding SelectedTown}" Margin="0,10,0,0" FontFamily="Dubai Medium" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
-                <ComboBoxItem Content="Ангарск"/>
-                <ComboBoxItem Content="Усолье-Сибирское"/>
-                <ComboBoxItem Content="Иркутск"/>
+            <ComboBox Width="140" Height="35" ItemsSource="{Binding Cities}" SelectedValue="{Binding SelectedCity, Mode=TwoWay}" SelectedIndex="0" Margin="0,10,0,0" FontFamily="Dubai Medium" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
             </ComboBox>
-            <Label Content="ВЫБЕРИТЕ ПНЗА" Margin="0,100,0,0" FontFamily="Dubai Medium" FontSize="16" HorizontalAlignment="Center" Visibility="Visible"/>
-            <Button Content="ДАЛЕЕ" Width="140" Height="35" IsEnabled="False" Visibility="Visible"/>
-            <Label Content="ВЫБЕРИТЕ ИСТОЧНИКИ" Margin="0,100,0,0" FontFamily="Dubai Medium" FontSize="16" Height="87" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Visibility="Visible"/>
-            <Button Content="ДАЛЕЕ" Width="140" Height="35" Visibility="Visible"/>
-
-
-
+            <ListBox ItemsSource="{Binding PNZAPoints}" 
+                                 SelectionMode="Multiple" 
+                                 MaxHeight="150">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" 
+                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Margin="0,100,0,0" ItemsSource="{Binding SourcePoints}" 
+                                 SelectionMode="Multiple" 
+                                 MaxHeight="150">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" 
+                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 

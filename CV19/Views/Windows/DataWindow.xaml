@@ -1,0 +1,36 @@
+﻿<Window x:Class="CV19.Views.Windows.DataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CV19.Views.Windows"
+        mc:Ignorable="d"
+        Title="DataWindow" Height="450" Width="800"
+        >
+
+    <Grid>
+        <DataGrid x:Name="dataGridCity" ItemsSource="{Binding DataCity}" 
+                  
+                  Margin="10,10,10,40"
+                  HorizontalAlignment="Stretch"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"
+/>
+        <DataGrid x:Name="dataGridPNZA" ItemsSource="{Binding DataPNZA}" 
+                  AutoGenerateColumns="True"
+                  Margin="10,115,10,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dataGridSource" ItemsSource="{Binding DataSource}" 
+                  AutoGenerateColumns="True"
+                  Margin="10,220,10,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom" Margin="0,0,0,0">
+            <Button Content="Удалить" Margin="10"/>
+            <Button Content="Редактировать" Margin="10" Click="Button_Click"/>
+            <Button Content="Добавить" 
+                    Margin="10"
+                    Command="{Binding AddDataCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
