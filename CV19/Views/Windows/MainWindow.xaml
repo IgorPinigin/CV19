@@ -105,8 +105,21 @@ xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.Map
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-
+            <Button Content="Рассчитать" 
+                Height="60" 
+                FontSize="24" 
+                Foreground="White" 
+                FontFamily="Bahnschrift Condensed" 
+                Background="#FF636363"
+                Width="240"
+                Visibility="{Binding VisibilityCalculateButton}"
+                Command="{Binding ExportDataCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="14"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
     </Grid>
-
 </Window>
