@@ -5,32 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19.Views.Windows"
         mc:Ignorable="d"
-        Title="DataWindow" Height="450" Width="800"
+        Title="DataWindow" 
+        WindowState="Maximized" d:DesignHeight="1080" d:DesignWidth="1920"
         >
-
+    <Window.Background>
+        <ImageBrush ImageSource="BackgroundImage.jpg" Opacity="0.24"/>
+    </Window.Background>
     <Grid>
         <DataGrid x:Name="dataGridCity" ItemsSource="{Binding DataCity}" 
                   
-                  Margin="10,10,10,40"
-                  HorizontalAlignment="Stretch"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"
+                  Margin="186,102,186,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="100" VerticalAlignment="Top"
 />
         <DataGrid x:Name="dataGridPNZA" ItemsSource="{Binding DataPNZA}" 
                   AutoGenerateColumns="True"
-                  Margin="10,115,10,0"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"/>
+                  Margin="186,268,186,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="264" VerticalAlignment="Top"/>
         <DataGrid x:Name="dataGridSource" ItemsSource="{Binding DataSource}" 
                   AutoGenerateColumns="True"
-                  Margin="10,220,10,0"
-                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Width="780" Height="100" VerticalAlignment="Top"/>
+                  Margin="186,605,186,0"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="277" VerticalAlignment="Top">
+        </DataGrid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                     VerticalAlignment="Bottom" Margin="0,0,0,0">
-            <Button Content="Удалить" Margin="10"/>
-            <Button Content="Редактировать" Margin="10" Click="Button_Click"/>
+            <Button Content="Удалить" Margin="10"  Width ="350" Height="90" FontSize="24" Foreground="White" FontFamily="Bahnschrift Condensed" Background="#FF636363">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"></Setter>
+                    </Style>
+                </Button.Resources>
+                </Button>
+            <Button Content="Редактировать" Margin="10" Click="Button_Click"  Width ="350" Height="90" FontSize="24" Foreground="White" FontFamily="Bahnschrift Condensed" Background="#FF636363">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
             <Button Content="Добавить" 
                     Margin="10"
-                    Command="{Binding AddDataCommand}"/>
+                    Command="{Binding AddDataCommand}"
+                     Width ="350" Height="90" FontSize="24" Foreground="White" FontFamily="Bahnschrift Condensed" Background="#FF636363">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

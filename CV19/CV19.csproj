@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Windows\BackgroundImage.jpg" />
+    <None Remove="Views\Windows\Images\BackgroundImage.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="Gdal.Core" Version="1.0.0" />
     <PackageReference Include="Geocoding.Core" Version="4.0.1" />
@@ -51,6 +56,14 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Windows\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Windows\BackgroundImage.jpg" />
   </ItemGroup>
 
 </Project>

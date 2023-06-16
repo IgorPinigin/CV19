@@ -1,10 +1,6 @@
-﻿using CV19.Services;
-using CV19.ViewModels;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using CV19.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,15 +16,14 @@ using System.Windows.Shapes;
 namespace CV19.Views.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для NewRowDataWindow.xaml
+    /// Логика взаимодействия для ExportWindow.xaml
     /// </summary>
-    public partial class NewRowDataWindow : Window
+    public partial class ExportWindow : Window
     {
-
-        public NewRowDataWindow()
+        public ExportWindow(BitmapImage bitmapImage)
         {
             InitializeComponent();
-            DataContext = new NewRowDataWindowViewModel();
-        } 
+            DataContext = new ExportViewModel(bitmapImage);
+        }
     }
 }

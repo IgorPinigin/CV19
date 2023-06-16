@@ -1,4 +1,5 @@
-﻿using Microsoft.Maps.MapControl.WPF;
+﻿using Geocoding.Microsoft.Json;
+using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace CV19.Models
 {
-    public class PNZAPoint : INotifyPropertyChanged
+    public class MainPoint : INotifyPropertyChanged
     {
         private bool _isSelected = true;
         private string _visibility = "Visible";
 
         public decimal Value { get; set; }
-        public Location Location { get; set; }
+        public MapControl.Location Location { get; set; }
         public string Name { get; set; }
 
         public bool IsSelected
@@ -51,12 +52,17 @@ namespace CV19.Models
             }
         }
 
-        public PNZAPoint(double latitude, double longitude, string name)
+        public MainPoint(PNZAPoint pNZAPoint)
         {
-            Location = new Location(latitude, longitude);
-            Name = name;
+            Location = new MapControl.Location(pNZAPoint.Location.Latitude, pNZAPoint.Location.Longitude);
+            Name = pNZAPoint.Name;
         }
 
+        public MainPoint(SourcePoint source)
+        {
+            Location = new MapControl.Location(source.Location.Latitude, source.Location.Longitude);
+            Name = source.Name;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

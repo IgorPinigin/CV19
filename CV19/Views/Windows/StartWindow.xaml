@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19.Views.Windows"
         mc:Ignorable="d"
-        Title="StartWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Управление базой данных" Command="{Binding ShowDataCommand}" Margin="5" />
+        Title="StartWindow"
+        WindowState="Maximized"
+       >
+
+    <Window.Background>
+        <ImageBrush ImageSource="BackgroundImage.jpg" Opacity="0.24"/>
+    </Window.Background>
+    
+    <Grid Margin="0,0,0,-16">
+
+        <StackPanel HorizontalAlignment="Left" Width="388" Height="312" Margin="0,336,0,336">
+            <Button Content="Работа с расчетным модулем" Command="{Binding VisualizationCommand}"  Width ="350" Height="90" Margin="5,0,0,100" FontSize="24" Foreground="White" FontFamily="Bahnschrift Condensed" Background="#FF636363" >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+            <Button Content="Управление базой данных" Command="{Binding ShowDataCommand}"  Width ="350" Height="90" Margin="5" Foreground="White" FontSize="24" FontFamily="Bahnschrift Condensed" Background="#FF636363" >
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="20"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

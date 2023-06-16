@@ -1,5 +1,6 @@
 ﻿using CV19.ViewModels;
 using MapControl;
+using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
+using Location = Microsoft.Maps.MapControl.WPF.Location;
 
 namespace CV19
 {
@@ -20,15 +22,14 @@ namespace CV19
         {
             InitializeComponent();
             DataContext = viewModel;
-            
-           
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
             DataContext = viewModel;
         }
+
     }
 
     public class ViewModel : INotifyPropertyChanged

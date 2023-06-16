@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Identity.Client;
+using static Azure.Core.HttpHeader;
+using System.Windows;
 
 namespace CV19.Models.DataModels
 {
@@ -96,7 +99,7 @@ namespace CV19.Models.DataModels
                 return pNZAPoints;
             }
         }
-         public List<SourcePoint> GetSourcePointsByCity(string city)
+         public List<PNZAPoint> GetSourcePointsByCity(string city)
         {
             int city1 = 0;
             switch (city) {
@@ -118,16 +121,65 @@ namespace CV19.Models.DataModels
                 var command = new SqlCommand("SELECT DISTINCT [Название], Lattitude, Longitude FROM [dbo].[Точечные источники] WHERE [ГородID]=@City", connection);
                 command.Parameters.AddWithValue("@City", city1);
                 var reader = command.ExecuteReader();
-                var sourcePoints = new List<SourcePoint>();
+                var pNZAPoints = new List<PNZAPoint>();
                 while (reader.Read())
                 {
                     double latitude = Convert.ToDouble(reader["Lattitude"]);
                     double longitude = Convert.ToDouble(reader["Longitude"]);
                     string name = reader["Название"].ToString();
 
-                    sourcePoints.Add(new SourcePoint(latitude, longitude, name));
+                    pNZAPoints.Add(new PNZAPoint(latitude, longitude, name));
                 }
-                return sourcePoints;
+                return pNZAPoints;
+            }
+            
+        }
+        public void AddValues(string id, string name, string latitude, string longitude, string cityId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    var command = new SqlCommand("INSERT INTO [dbo].[Точечные источники] VALUES (@ID, @Name, @Latitude, @Longitude, @CityID)", connection);
+                    command.CommandType = CommandType.Text;
+                    int Id = Convert.ToInt32(id);
+                    int CityId = Convert.ToInt32(cityId);
+                    command.Parameters.AddWithValue("@ID", Id);
+                    command.Parameters.AddWithValue("@Name", name);
+                    double Latitude = Convert.ToDouble(latitude);
+                    command.Parameters.AddWithValue("@Latitude", Latitude);
+                    double Longitude = Convert.ToDouble(longitude);
+                    command.Parameters.AddWithValue("@Longitude", Longitude);
+                    command.Parameters.AddWithValue("@CityID", CityId);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        internal void GetPollutionValuesForPNZA(ObservableCollection<PNZAPoint> pNZAPoints)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                foreach (var point in pNZAPoints)
+                {
+                    var command = new SqlCommand("SELECT * FROM [dbo].[Точечные источники] WHERE [Название] =@Name", connection);
+                    command.Parameters.AddWithValue("@Name", point.Name);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        point.Value = Convert.ToDecimal(reader[5]);
+                    }
+                    reader.Close();
+                }
             }
         }
     }

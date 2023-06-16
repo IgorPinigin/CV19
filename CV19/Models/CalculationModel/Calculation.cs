@@ -58,5 +58,41 @@ namespace CV19.Models.CalculationModel
         }
 
 
+
+
+
+
+        private const double EarthRadiusKm = 6371;
+
+        public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        {
+            var dLat = DegreesToRadians(lat2 - lat1);
+            var dLon = DegreesToRadians(lon2 - lon1);
+
+            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                    Math.Cos(DegreesToRadians(lat1)) * Math.Cos(DegreesToRadians(lat2)) *
+                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return EarthRadiusKm * c;
+        }
+
+        private static double DegreesToRadians(double degrees)
+        {
+            return degrees * Math.PI / 180;
+        }
+
+        private const double EarthRadius = 6371000; // радиус Земли в метрах
+        private const double DegreesToRadians1 = Math.PI / 180.0; // коэффициент для перевода градусов в радианы
+
+        public static double ConvertMetrsToCoordinates(double distanceInMeters)
+        {
+            // расчет шага по широте в градусах
+            double latitudinalDistance = distanceInMeters / EarthRadius;
+            double latitudinalDegrees = latitudinalDistance / DegreesToRadians1;
+
+            return latitudinalDegrees;
+        }
     }
 }

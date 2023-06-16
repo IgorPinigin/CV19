@@ -3,17 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:map="clr-namespace:MapControl;assembly=MapControl.WPF"
 xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="XAML MapControl - Projection Demo" Height="1050" Width="1920" WindowStartupLocation="CenterScreen" 
-        Loaded="Window_Loaded">
+        Title="MainWindow" Height="1050" Width="1920" WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded"
+        WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180*"/>
-            <ColumnDefinition Width="1620*"/>
+            <ColumnDefinition Width="263*"/>
+            <ColumnDefinition Width="1657*"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="1">
             <m:Map x:Name="myMap" 
                        CredentialsProvider="eZNgmmR40DyTunPmOrBp~kolAxjG20pwiJF7fIm2QRw~AgWBvZTh2hKwZ5-mh8lAl9VPhPh9CcU0YgZtlG62RHVmxwhFLrPTU1UecR96Old1" 
-                       Mode="AerialWithLabels" >
+                       Mode="AerialWithLabels">
                 <m:MapItemsControl ItemsSource="{Binding PNZAPoints}">
                     <m:MapItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -26,31 +27,85 @@ xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.Map
             </m:Map>
         </Border>
         <StackPanel Grid.Column="0">
-            <Label Content="ВЫБЕРИТЕ ГОРОД" Margin="0,100,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Dubai Medium" FontSize="16"/>
-            <ComboBox Width="140" Height="35" ItemsSource="{Binding Cities}" SelectedValue="{Binding SelectedCity, Mode=TwoWay}" SelectedIndex="0" Margin="0,10,0,0" FontFamily="Dubai Medium" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
-            </ComboBox>
-            <ListBox ItemsSource="{Binding PNZAPoints}" 
+            <StackPanel.Background>
+                <ImageBrush ImageSource="BackgroundImage.jpg" Opacity="0.24" Stretch="None"/>
+            </StackPanel.Background>
+            <Label Content="Выберите город" Margin="0,100,0,0" HorizontalAlignment="Center" Foreground="White" FontFamily="Bahnschrift Condensed" FontSize="24" Background="#FF636363" Height="60" Width="235" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <ComboBox Width="240" Height="35" ItemsSource="{Binding Cities}" SelectedValue="{Binding SelectedCity, Mode=TwoWay}" SelectedIndex="0" Margin="0,30,0,0" />
+            <Label Content="{Binding TextLabel}" Foreground="White" FontFamily="Bahnschrift Condensed" FontSize="24" Background="#FF636363" Height="60" Width="235" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,30,0,0" Visibility="{Binding VisibilitySelectPNZA}"/>
+            <ListBox ItemsSource="{Binding PNZAPoints}" Width="240"
                                  SelectionMode="Multiple" 
-                                 MaxHeight="150">
+                     Foreground="White" 
+                     FontFamily="Bahnschrift Condensed"
+                     FontSize="16"
+                     MaxHeight="150"
+                     Background="#FF636363"
+                     Visibility="{Binding VisibilitySelectPNZA}"
+                     Margin="0,30,0,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <CheckBox Content="{Binding Name}" 
-                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                                  IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox Margin="0,100,0,0" ItemsSource="{Binding SourcePoints}" 
-                                 SelectionMode="Multiple" 
-                                 MaxHeight="150">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <CheckBox Content="{Binding Name}" 
-                                        IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <Button Content="Далее" 
+                    Height="60" 
+                    FontSize="24" 
+                    Foreground="White" 
+                    FontFamily="Bahnschrift Condensed" 
+                    Background="#FF636363" 
+                    Margin="0,30,0,0"
+                    Visibility="{Binding VisibilityNextStepButton}"
+                Command="{Binding NextStepCommand}" Width="240">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="14"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <RadioButton x:Name="rbtnMin" Content="Минимальные значения" Margin="0,30,0,0" HorizontalAlignment="Center" IsChecked="{Binding CheckedMin}" Width="167" Visibility="{Binding VisibilityCalculateButton}"/>
+            <RadioButton x:Name="rbtnMax" Content="Максимальные значения" Margin="0,10,0,0" HorizontalAlignment="Center" Width="167" Visibility="{Binding VisibilityCalculateButton}"/>
+            <Button Content="Рассчитать" 
+                    Margin="0,30,0,0" 
+                    Height="60" 
+                    FontSize="24" 
+                    Foreground="White" 
+                    FontFamily="Bahnschrift Condensed" 
+                    Background="#FF636363"
+                    Width="240"
+                    Visibility="{Binding VisibilityCalculateButton}"
+                    Command="{Binding CalculateCommand}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="14"></Setter>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <StackPanel Grid.Column="1" Margin="5">
+                <ItemsControl ItemsSource="{Binding HeatMapElements}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <Rectangle Width="20" Height="20" Margin="0,0,5,0">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Color}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <TextBlock>
+                                            <Run Text="{Binding MaxValue, StringFormat={}{0:F3}}" />
+                                            <Run Text="нг/м³"/>
+                                            <Run Text="> X >"/>
+                                            <Run Text="{Binding MinValue, StringFormat={}{0:F3}}" />
+                                            <Run Text="нг/м³"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
         </StackPanel>
     </Grid>
 
