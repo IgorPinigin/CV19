@@ -29,8 +29,10 @@ namespace CV19.ViewModels
         #endregion
         #region Команды 
         private readonly DataModel _dataModel;
+        private bool _checkedMin; 
         private List<string> _cities;
         private string _selectedCity;
+        private string _textLabel;
         private ObservableCollection<PNZAPoint> _PNZAPoints;
         public ObservableCollection<HeatMapElement> _heatMapElements;
         private ObservableCollection<SourcePoint> _sourcePoints;
@@ -40,6 +42,8 @@ namespace CV19.ViewModels
         public ICommand ExportDataCommand { get; private set; }
         [ObservableProperty]
         private Visibility _visibilityNextStepButton;
+        [ObservableProperty]
+        private Visibility _visibleExportData;
         [ObservableProperty]
         private Visibility _visibilityCalculateButton;
         [ObservableProperty]
@@ -66,7 +70,9 @@ namespace CV19.ViewModels
 
         public MainWindowViewModel()
         {
+            _textLabel = "";
             ExportDataCommand = new Infrastructure.Commands.RelayCommand((Action<object>)ExportData);
+            VisibleExportData = Visibility.Hidden;
             VisibilityNextStepButton = Visibility.Hidden;
             VisibilityCalculateButton = Visibility.Hidden;
             VisibilityListSources = Visibility.Hidden;
@@ -90,12 +96,32 @@ namespace CV19.ViewModels
                 OnPropertyChanged();
             }
         }
+        public bool CheckedMin
+        {
+            get => _checkedMin;
+            set
+            {
+                _checkedMin = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TextLabel
+        {
+            get => _textLabel;
+            set
+            {
+                _textLabel = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string SelectedCity
         {
             get => _selectedCity;
             set
             {
                 _selectedCity = value;
+                _textLabel = "Выберите ПНЗА" as String;
                 OnPropertyChanged();
                 UpdateMap();
                 UpdatePNZAPoints();
@@ -146,7 +172,6 @@ namespace CV19.ViewModels
             {
                 _mainPoints = value;
                 OnPropertyChanged();
-
             }
         }
 
@@ -167,7 +192,6 @@ namespace CV19.ViewModels
             {
                 _sourcePoints = value;
                 OnPropertyChanged();
-
             }
         }
         //private void UpdateMainPoints()
@@ -243,11 +267,18 @@ namespace CV19.ViewModels
             int selectedCount = PNZAPoints.Count(mp => mp.IsSelected == true);
             return !string.IsNullOrEmpty(SelectedCity) && selectedCount >= 2 && map.Children.Count <= 1;
         }
-
+     
         private void Calculate()
         {
-            
-            _dataModel.GetPollutionValuesForPNZA(PNZAPoints);
+            if (CheckedMin)
+            {
+                _dataModel.GetPollutionValuesMinForPNZA(PNZAPoints);
+            }
+            else {
+                _dataModel.GetPollutionValuesMaxForPNZA(PNZAPoints);
+            }
+
+            VisibleExportData = Visibility.Visible;
             var map = App.Current.MainWindow.FindName("myMap") as Map;
             
 

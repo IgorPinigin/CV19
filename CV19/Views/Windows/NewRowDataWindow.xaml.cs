@@ -24,11 +24,46 @@ namespace CV19.Views.Windows
     /// </summary>
     public partial class NewRowDataWindow : Window
     {
-
+        private readonly string ConnectionString = CV19.Services.ConnectionString.connStr;
         public NewRowDataWindow()
         {
             InitializeComponent();
             DataContext = new NewRowDataWindowViewModel();
-        } 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AddValues(IDtb.Text, Nametb.Text, Latitudetb.Text, Longitudetb.Text, CityIDtb.Text);
+        }
+
+        public void AddValues(string id, string name, string latitude, string longitude, string cityId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    var command = new SqlCommand("INSERT INTO [dbo].[Точечные источники] VALUES (@ID, @Name, @Latitude, @Longitude, @CityID, NULL, NULL)", connection);
+                    command.CommandType = CommandType.Text;
+                    int Id = Convert.ToInt32(id);
+                    int CityId = Convert.ToInt32(cityId);
+                    command.Parameters.AddWithValue("@ID", Id);
+                    command.Parameters.AddWithValue("@Name", name);
+                    double Latitude = Convert.ToDouble(latitude);
+                    command.Parameters.AddWithValue("@Latitude", Latitude);
+                    double Longitude = Convert.ToDouble(longitude);
+                    command.Parameters.AddWithValue("@Longitude", Longitude);
+                    command.Parameters.AddWithValue("@CityID", CityId);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

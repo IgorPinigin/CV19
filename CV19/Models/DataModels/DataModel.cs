@@ -58,7 +58,7 @@ namespace CV19.Models.DataModels
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM [dbo].[Точечные источники]", connection);
+                SqlCommand command = new SqlCommand("SELECT (ID),([Название]) FROM [dbo].[Точечные источники]", connection);
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
@@ -164,7 +164,7 @@ namespace CV19.Models.DataModels
             }
         }
 
-        internal void GetPollutionValuesForPNZA(ObservableCollection<PNZAPoint> pNZAPoints)
+        internal void GetPollutionValuesMinForPNZA(ObservableCollection<PNZAPoint> pNZAPoints)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -177,6 +177,25 @@ namespace CV19.Models.DataModels
                     if (reader.Read())
                     {
                         point.Value = Convert.ToDecimal(reader[5]);
+                    }
+                    reader.Close();
+                }
+            }
+        }
+
+        internal void GetPollutionValuesMaxForPNZA(ObservableCollection<PNZAPoint> pNZAPoints)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                foreach (var point in pNZAPoints)
+                {
+                    var command = new SqlCommand("SELECT * FROM [dbo].[Точечные источники] WHERE [Название] =@Name", connection);
+                    command.Parameters.AddWithValue("@Name", point.Name);
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        point.Value = Convert.ToDecimal(reader[6]);
                     }
                     reader.Close();
                 }

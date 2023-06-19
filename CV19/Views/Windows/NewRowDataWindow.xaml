@@ -21,7 +21,7 @@
         <Label Content="Latitude:" HorizontalAlignment="Left" Margin="78,169,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label Content="Longitude:" HorizontalAlignment="Left" Margin="78,219,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label Content="ГородID:" HorizontalAlignment="Left" Margin="78,269,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Button Content="Добавить" Foreground="White" FontSize="16" FontFamily="Bahnschrift Condensed" Background="#FF636363" Margin="274,348,312,28" Command="">
+        <Button Content="Добавить" Foreground="White" FontSize="16" FontFamily="Bahnschrift Condensed" Background="#FF636363" Margin="274,348,312,28" Command="" Click="Button_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>
